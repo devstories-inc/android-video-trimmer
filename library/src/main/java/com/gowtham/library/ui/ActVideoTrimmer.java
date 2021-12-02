@@ -1,6 +1,7 @@
 package com.gowtham.library.ui;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -499,6 +500,7 @@ public class ActVideoTrimmer extends LocalizationActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressLint("StringFormatInvalid")
     private void trimVideo() {
         if (isValidVideo) {
             //not exceed given maxDuration if has given
@@ -525,8 +527,10 @@ public class ActVideoTrimmer extends LocalizationActivity {
                         "-async", "1", "-strict", "-2", "-c", "copy", outputPath};
             }
             execFFmpegBinary(complexCommand, true);
-        } else
-            Toast.makeText(this, getString(R.string.txt_smaller) + " " + TrimmerUtils.getLimitedTimeFormatted(maxToGap), Toast.LENGTH_SHORT).show();
+        } else {
+            String msg = String.format(getString(R.string.txt_smaller), TrimmerUtils.getLimitedTimeFormatted(maxToGap));
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private String getFileName() {
